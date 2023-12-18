@@ -1,0 +1,93 @@
+entity AcademicYear {
+  title String required
+}
+
+entity StudyPlace {
+  title String required
+}
+
+entity Group {
+  title String required
+  acceptanceDate LocalDate
+}
+
+entity EducationalProgram {
+  title String required
+  monthLength Double required
+}
+
+entity EmployeeSubject {
+  academicSubject Long  required
+}
+
+entity AcademicSubject {
+  title String required
+  hours Integer required
+}
+
+entity Student {
+  alphabetBookNumber Long unique required
+  firstName String required
+  secondName String
+  lastName String required
+  birthDate LocalDate required
+  acceptanceOrder Long
+  exclusionOrder Long
+}
+
+entity Employee {
+  firstName String  required
+  secondName String
+  lastName String  required
+  birthDate LocalDate  required
+  jobTitle String required
+}
+
+entity Order {
+  title String required
+  date LocalDate required
+  number Integer required
+}
+
+entity PersonalGrade {
+  grade Integer required
+}
+
+relationship ManyToMany{
+  EmployeeSubject to Group
+  EmployeeSubject to AcademicSubject
+}
+
+relationship ManyToOne {
+  EducationalProgram to AcademicYear
+  AcademicSubject to EducationalProgram
+  Student to Group
+  Student{acceptanceOrder} to Order
+  Student{exclusionOrder} to Order
+}
+
+relationship OneToOne {
+  Group to EducationalProgram
+  Group to StudyPlace
+  PersonalGrade to AcademicSubject
+
+}
+
+relationship OneToMany {
+  Employee to EmployeeSubject
+  Student to PersonalGrade
+}
+
+
+// Set pagination options
+// paginate Employee, Student with infinite-scroll
+// paginate Job with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+//service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
